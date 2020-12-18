@@ -44,11 +44,32 @@ public class SqlBaseService {
 
     public <T> List<T> queryResultList(String sql, Class<T> resCls) {
         log.info("#queryResultList# begin, sql: {}", sql);
-
         InputStream inputStream = null; //TODO：获取结果
 
         if (Objects.nonNull(inputStream)) {
             return SqlUtils.parseResultList(resCls, inputStream);
+        }
+        return null;
+    }
+
+    public <T> List<T> queryOne(Class<T> cls, SQL selectSQL) {
+        log.info("#queryOne# param, cls: {}, sql: {}", cls, selectSQL);
+        InputStream inputStream = null; //TODO：获取结果
+
+        if (Objects.nonNull(inputStream)) {
+            return SqlUtils.parseValueList(cls, inputStream);
+        }
+        return null;
+    }
+
+    public Integer count(Class clz, String col, Object wp) {
+        log.info("#count# param, cls: {}, where param: {}", col, wp);
+        String sql = SqlUtils.countSQL(clz, col, wp);
+        log.info("#count# begin, sql: {}", sql);
+        InputStream inputStream = null; //TODO：获取结果
+
+        if (Objects.nonNull(inputStream)) {
+            return SqlUtils.parseValue(Integer.class, inputStream);
         }
         return null;
     }
